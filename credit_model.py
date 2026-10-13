@@ -83,6 +83,25 @@ def best_cutoff(y, p):
     return float(grid[i]), float(costs[i])
 
 
+def cost_sensitivity(y, p, ratios=(1, 2, 3, 5, 10)):
+    """How the chosen cutoff moves when a missed default costs more or less."""
+    global COST_FALSE_NEGATIVE
+    base, rows = COST_FALSE_NEGATIVE, []
+    try:
+        for r in ratios:
+            COST_FALSE_NEGATIVE = float(r)
+            cutoff, _ = best_cutoff(y, p)
+            flagged = p >= cutoff
+            rows.append({"cost_ratio": r, "cutoff_pd": round(cutoff, 2),
+                         "share_flagged": round(float(flagged.mean()), 4),
+                         "defaults_caught": round(float(flagged[y == 1].mean()), 4),
+                         "defaults_missed": int((~flagged & (y == 1)).sum()),
+                         "good_clients_declined": int((flagged & (y == 0)).sum())})
+    finally:
+        COST_FALSE_NEGATIVE = base
+    return rows
+
+
 def to_score(pd_, base=600, base_odds=50, pdo=20):
     """Convert PD to a scorecard: 600 points at 50:1 odds of paying, +20 points doubles the odds."""
     odds = (1 - pd_) / np.clip(pd_, 1e-6, None)
@@ -187,10 +206,13 @@ def main():
     plot_calibration(y_te, preds)
     plot_score_bands(y_te, to_score(preds["Logistic regression"]))
     importance = plot_importance(gbm, X_te, y_te)
+    sensitivity = cost_sensitivity(y_te, preds["Gradient boosting"])
 
     out = {"test_rows": int(len(y_te)), "test_default_rate": round(float(y_te.mean()), 4),
            "cost_ratio_fn_to_fp": COST_FALSE_NEGATIVE / COST_FALSE_POSITIVE,
-           "results": results, "gbm_importance": importance}
+           "gbm_trees_used": int(gbm.n_iter_),
+           "results": results, "gbm_importance": importance,
+           "gbm_cost_sensitivity": sensitivity}
     (REPORTS / "metrics.json").write_text(json.dumps(out, indent=2))
     print(pd.DataFrame(results).to_string(index=False))
 

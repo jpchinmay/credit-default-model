@@ -2,6 +2,7 @@
   "test_rows": 6000,
   "test_default_rate": 0.2212,
   "cost_ratio_fn_to_fp": 5.0,
+  "gbm_trees_used": 91,
   "results": [
     {
       "model": "Logistic regression",
@@ -39,5 +40,47 @@
     "paid_apr": 0.0031,
     "bill_aug": 0.0028,
     "paid_jul": 0.0023
-  }
+  },
+  "gbm_cost_sensitivity": [
+    {
+      "cost_ratio": 1,
+      "cutoff_pd": 0.57,
+      "share_flagged": 0.1032,
+      "defaults_caught": 0.3278,
+      "defaults_missed": 892,
+      "good_clients_declined": 184
+    },
+    {
+      "cost_ratio": 2,
+      "cutoff_pd": 0.31,
+      "share_flagged": 0.221,
+      "defaults_caught": 0.5426,
+      "defaults_missed": 607,
+      "good_clients_declined": 606
+    },
+    {
+      "cost_ratio": 3,
+      "cutoff_pd": 0.27,
+      "share_flagged": 0.2473,
+      "defaults_caught": 0.578,
+      "defaults_missed": 560,
+      "good_clients_declined": 717
+    },
+    {
+      "cost_ratio": 5,
+      "cutoff_pd": 0.17,
+      "share_flagged": 0.4305,
+      "defaults_caught": 0.743,
+      "defaults_missed": 341,
+      "good_clients_declined": 1597
+    },
+    {
+      "cost_ratio": 10,
+      "cutoff_pd": 0.09,
+      "share_flagged": 0.7387,
+      "defaults_caught": 0.9299,
+      "defaults_missed": 93,
+      "good_clients_declined": 3198
+    }
+  ]
 }

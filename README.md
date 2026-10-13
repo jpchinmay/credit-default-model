@@ -4,11 +4,11 @@ A probability-of-default (PD) model for 30,000 credit card clients, built in Pyt
 
 ## Data
 
-The [UCI Default of Credit Card Clients](https://archive.ics.uci.edu/dataset/350/default+of+credit+card+clients) dataset (Yeh and Lien, 2009) covers clients of a Taiwanese bank between April and September 2005. Each row has the credit limit, age, sex, education, marital status, six months of repayment status, bill amounts and payments, and whether the client defaulted the following month. 22.1% of clients defaulted.
+The [UCI Default of Credit Card Clients](https://archive.ics.uci.edu/dataset/350/default+of+credit+card+clients) dataset (Yeh and Lien, 2009) covers credit card clients in Taiwan between April and September 2005. Each row has the credit limit, age, sex, education, marital status, six months of repayment status, bill amounts and payments, and whether the client defaulted the following month. 22.1% of clients defaulted.
 
 The script downloads the data from OpenML (dataset 42477) on the first run, so nothing is stored in this repo.
 
-Two cleaning steps: education codes 0, 5 and 6 are not documented in the source, so I merged them into "other", and marriage code 0 went into "other" for the same reason.
+Two cleaning steps: the source defines education codes 1 to 4 only, so I merged codes 0, 5 and 6, which also appear in the data, into "other". Marriage code 0 is not defined either and went into "other".
 
 ## Features
 
@@ -53,11 +53,11 @@ In the scorecard, the bottom score decile defaults at about 65% and the top deci
 
 ![Default rate by score band](reports/figures/score_bands.png)
 
-Full numbers, including importances, are in `reports/metrics.json`.
+Full numbers, including importances and how the cutoff moves for cost ratios from 1:1 to 10:1, are in `reports/metrics.json`.
 
 ## Limitations
 
-The data is from one Taiwanese bank in 2005, so the model shows the method, not a PD that could be used on today's UK customers. The split is random rather than out of time, because the dataset only covers one six-month window. Sex, age and marital status are in the model because they are in the data, but a real lender in the UK could not use sex or marital status in a credit decision, and those columns would have to come out.
+The data covers credit card clients in Taiwan in 2005, so the model shows the method, not a PD that could be used on today's UK customers. The split is random rather than out of time, because the dataset only covers one six-month window. Sex, age and marital status are in the model because they are in the data, but a real lender in the UK could not use sex or marital status in a credit decision, and those columns would have to come out.
 
 ## Run it
 
