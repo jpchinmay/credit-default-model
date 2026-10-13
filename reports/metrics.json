@@ -1,0 +1,43 @@
+{
+  "test_rows": 6000,
+  "test_default_rate": 0.2212,
+  "cost_ratio_fn_to_fp": 5.0,
+  "results": [
+    {
+      "model": "Logistic regression",
+      "auc": 0.7468,
+      "gini": 0.4936,
+      "ks": 0.393,
+      "brier": 0.142,
+      "cost_cutoff_pd": 0.15,
+      "share_flagged": 0.4153,
+      "defaults_caught": 0.6986,
+      "total_cost": 3565.0
+    },
+    {
+      "model": "Gradient boosting",
+      "auc": 0.782,
+      "gini": 0.5639,
+      "ks": 0.4279,
+      "brier": 0.1346,
+      "cost_cutoff_pd": 0.17,
+      "share_flagged": 0.4305,
+      "defaults_caught": 0.743,
+      "total_cost": 3302.0
+    }
+  ],
+  "gbm_importance": {
+    "months_late": 0.0277,
+    "pay_sep": 0.0248,
+    "bill_sep": 0.0107,
+    "utilisation": 0.0085,
+    "worst_delay": 0.0065,
+    "paid_aug": 0.0062,
+    "limit_bal": 0.0056,
+    "avg_utilisation": 0.0048,
+    "paid_sep": 0.0036,
+    "paid_apr": 0.0031,
+    "bill_aug": 0.0028,
+    "paid_jul": 0.0023
+  }
+}
